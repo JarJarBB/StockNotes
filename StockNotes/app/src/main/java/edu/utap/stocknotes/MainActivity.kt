@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager
+import com.android.volley.toolbox.Volley
 
 
 object PlaceholderData {
@@ -24,8 +25,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val viewPager: ViewPager = findViewById(R.id.viewPager)
 
+        val queue = Volley.newRequestQueue(this)
         for (i in PlaceholderData.values) {
-            Repository.netInfo(i.symbol, this, viewModel)
+            Repository.netInfo(i.symbol, viewModel, queue)
         }
 
         viewModel.observeStockValues().observe(this, Observer {

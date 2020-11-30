@@ -1,19 +1,17 @@
 package edu.utap.stocknotes
 
-import android.content.Context
 import android.util.Log
 import com.android.volley.Request
+import com.android.volley.RequestQueue
 import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
 
 
 object Repository {
 
     private const val templateUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&apikey=MS444HQW0HB7WHKU&symbol="
 
-    fun netInfo(symbol: String, context: Context, viewModel: MyViewModel) {
+    fun netInfo(symbol: String, viewModel: MyViewModel, queue: RequestQueue) {
         val url = templateUrl + symbol
-        val queue = Volley.newRequestQueue(context)
         val stringRequest = StringRequest(
             Request.Method.GET, url,
             {
@@ -24,7 +22,6 @@ object Repository {
                 // on error
                 Log.d("StringRequest", "Unable to get content from server")
             })
-
         // Add the request to the RequestQueue.
         queue.add(stringRequest)
     }
