@@ -29,6 +29,10 @@ class MainActivity : AppCompatActivity() {
             map[value.symbol] = listOf()
         }
 
+        // just to get the adapter going, without waiting for the network
+        val sym = PlaceholderData.values[0].symbol
+        viewModel.postDataPoints(Pair(sym, map[sym]) as Pair<String, List<Value>>)
+
         val queue = Volley.newRequestQueue(this)
         for (i in PlaceholderData.values) {
             Repository.netInfo(i.symbol, viewModel, queue)
