@@ -19,7 +19,7 @@ class MyPageAdapter(private val theView: Int,
                     ) : PagerAdapter() {
 
     override fun getCount(): Int {
-        return PlaceholderData.values.size // Should return the number of GraphNotes
+        return map.size // Should return the number of GraphNotes
     }
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean {

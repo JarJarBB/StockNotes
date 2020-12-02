@@ -25,6 +25,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val viewPager: ViewPager = findViewById(R.id.viewPager)
 
+        for (value in PlaceholderData.values) {
+            map[value.symbol] = listOf()
+        }
+
         val queue = Volley.newRequestQueue(this)
         for (i in PlaceholderData.values) {
             Repository.netInfo(i.symbol, viewModel, queue)
@@ -32,9 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.observeStockValues().observe(this, Observer {
             map[it.first] = it.second
-            if (map.size == PlaceholderData.values.size) {
-                viewPager.adapter = MyPageAdapter(myView, this@MainActivity, PlaceholderData.values, map)
-            }
+            viewPager.adapter = MyPageAdapter(myView, this, PlaceholderData.values, map)
         })
     }
 }
