@@ -14,40 +14,38 @@
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="HardcodedText" />
-
+        tools:ignore="HardcodedText"
+        />
     <com.jjoe64.graphview.GraphView
         android:id="@+id/graph_view"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginTop="5dp"
-        app:layout_constraintTop_toBottomOf="@+id/stock_name" />
-
+        app:layout_constraintTop_toBottomOf="@+id/stock_name"
+        />
     <ImageView
         android:id="@+id/line_view"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="30dp"
         android:background="@color/black"
-        app:layout_constraintTop_toBottomOf="@+id/graph_view" />
-
+        app:layout_constraintTop_toBottomOf="@+id/graph_view"
+        />
     <EditText
         android:id="@+id/note_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:hint="Write here."
-        app:layout_constraintTop_toBottomOf="@+id/line_view" />
-
+        app:layout_constraintTop_toBottomOf="@+id/save_button"
+        />
     <Button
         android:id="@+id/delete_button"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="delete note"
-        app:layout_constraintBottom_toBottomOf="parent"
-
+        android:backgroundTint="#FFAA3333"
         />
-
     <TextView
         android:id="@+id/description"
         android:layout_width="wrap_content"
@@ -56,6 +54,16 @@
         app:layout_constraintBottom_toBottomOf="@+id/stock_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/stock_name"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="17sp"/>
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="save"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/line_view"
+        app:layout_constraintRight_toRightOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

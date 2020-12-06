@@ -40,7 +40,7 @@ import com.google.firebase.auth.ktx.userProfileChangeRequest
 
 
 object PlaceholderData {
-    val values = listOf(SymbolNote("AAPL", "Good stock to own... Maybe!","Apple Inc",true),
+    val values = listOf(SymbolNote("AAPL", "Good stock to own... Maybe!","Apple Inc",false),
             SymbolNote("SBUX", "Delicious stock to own... Fingers coffee!","Some random Stock",true),
             SymbolNote("NKE", "Not sure about buying. Maybe I should go for a run instead.","Nike",true))
 }

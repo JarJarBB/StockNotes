@@ -7,21 +7,27 @@
 
     <TextView
         android:id="@+id/shortname"
-        android:layout_width="204dp"
+        android:layout_width="130sp"
         android:layout_height="wrap_content"
         android:text="TextView"
         app:layout_constraintEnd_toStartOf="@+id/longname"
         app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="10dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        />
     <TextView
         android:id="@+id/longname"
-        android:layout_width="204dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="@+id/shortname"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/shortname" />
+        app:layout_constraintStart_toEndOf="@+id/shortname"
+        android:padding="10dp"
+        android:textSize="18sp"
+        android:singleLine="true"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
