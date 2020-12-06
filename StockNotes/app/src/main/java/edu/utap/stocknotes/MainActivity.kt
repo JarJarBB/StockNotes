@@ -36,11 +36,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
-
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 
 
 object PlaceholderData {
-    val values = listOf(SymbolNote("AAPL", "Good stock to own... Maybe!","Apple Inc",false),
+    var values = listOf(SymbolNote("AAPL", "Good stock to own... Maybe!","Apple Inc",false),
             SymbolNote("SBUX", "Delicious stock to own... Fingers coffee!","Some random Stock",true),
             SymbolNote("NKE", "Not sure about buying. Maybe I should go for a run instead.","Nike",true))
 }
@@ -58,6 +61,13 @@ class MainActivity : AppCompatActivity() {
 
 
 
+
+    companion object {
+        lateinit var currUser :String
+        lateinit var docref :DocumentReference
+        var store = FirebaseFirestore.getInstance()
+    }
+    lateinit var st:StorageST
 
 
 
@@ -77,6 +87,10 @@ class MainActivity : AppCompatActivity() {
             viewPager.adapter = MyPageAdapter(myView, this, PlaceholderData.values, map)
         })
 
+//        val allstocks=st.getAllStock()
+//        PlaceholderData.values=allstocks
+
+
         search_button.setOnClickListener{
             val getNameScreenIntent = Intent(this, SearchResultsActivity::class.java)
             val myExtras = Bundle()
@@ -85,6 +99,8 @@ class MainActivity : AppCompatActivity() {
             getNameScreenIntent.putExtras(myExtras)
             val result = 1
             startActivityForResult(getNameScreenIntent, result)
+
+
 
         }
 
@@ -108,13 +124,22 @@ class MainActivity : AppCompatActivity() {
             if (resultCode == Activity.RESULT_OK) {
                 // Successfully signed in
                 val user = FirebaseAuth.getInstance().currentUser
+                currUser = FirebaseAuth.getInstance().currentUser!!.uid
+                docref = store.collection("usersStocks").document(currUser)
+
+                st= StorageST()
                 Log.d("HERE", "Sign-in successful")
                 user?.let {
                     Log.d("HERE", "Username is ************** ${user.displayName}")
                     Log.d("HERE", "User email is ************ ${user.email}")
                 }
+                val allstocks=st.getAllStock()
+                PlaceholderData.values=allstocks
 
                 // just to get the adapter going, without waiting for the network
+
+
+//                Log.d("AllStocks",allstocks.size.toString())
                 val sym = PlaceholderData.values[0].symbol
                 viewModel.postDataPoints(Pair(sym, map[sym]) as Pair<String, List<Value>>)
 

@@ -19,7 +19,7 @@ class MyPageAdapter(private val theView: Int,
                     private val symbolNotes: List<SymbolNote>,
                     private val map: Map<String, List<Value>>
                     ) : PagerAdapter() {
-
+    private val st=StorageST()
     override fun getCount(): Int {
         return map.size // Should return the number of GraphNotes
     }
@@ -41,16 +41,15 @@ class MyPageAdapter(private val theView: Int,
         noteText.setText(symbolNotes[position].note)
         desc.text = symbolNotes[position].desc
 
-        if (symbolNotes[position].deleted == true){
-            del_but.text = "Add to favourites"
-            del_but.setBackgroundColor(Color.CYAN)
-        }
-        else{
 
-            del_but.text = "Delete Stock"
-            del_but.setBackgroundColor(Color.RED)
 
+        del_but.text = "Delete Stock"
+        del_but.setBackgroundColor(Color.RED)
+        del_but.setOnClickListener{
+
+            st.deleteStock(symbolNotes[position])
         }
+
         val series = LineGraphSeries<DataPoint>()
         for (data in map[symbolNotes[position].symbol]!!) {
             series.appendData(DataPoint(data.id.toDouble(), data.value.toDouble()), true, 1000)
