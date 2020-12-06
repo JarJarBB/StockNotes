@@ -6,15 +6,17 @@ import android.widget.SearchView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.android.volley.toolbox.Volley
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
+import kotlinx.android.synthetic.main.fav_graph.*
 import kotlinx.android.synthetic.main.search_rv.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlinx.android.synthetic.main.graph_note.*
 
 class FavActivity : AppCompatActivity() {
 
@@ -25,7 +27,7 @@ class FavActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Set the layout for the layout we created
-        setContentView(R.layout.graph_note)
+        setContentView(R.layout.fav_graph)
 
         val activityThatCalled = intent
         // Get the data that was sent
@@ -36,25 +38,29 @@ class FavActivity : AppCompatActivity() {
 
 
         stock_name.text = symb
-        note_text.setText("")
         description.text = name
-        delete_button.text="Add to Favourites"
-
-        val stt = SymbolNote(symb!!,note_text.text.toString(),name!!,true)
 
 
-        delete_button.setOnClickListener{
+        val stt = SymbolNote(symb!!,"",name!!,true)
+
+
+        add_button.setOnClickListener{
+
             Log.d("finish","clicked")
             st.addStock(stt)
             this.finish()
         }
 
-//        val series = LineGraphSeries<DataPoint>()
-//        for (data in map[symbolNotes[position].symbol]!!) {
-//            series.appendData(DataPoint(data.id.toDouble(), data.value.toDouble()), true, 1000)
-//        }
-//        graph_view.addSeries(series)
+        val queue = Volley.newRequestQueue(this)
+        if (symb != null) Repository.netInfo(symb, viewModel, queue)
 
+        viewModel.observeStockValues().observe(this, Observer {
+            val series = LineGraphSeries<DataPoint>()
+            for (data in it.second) {
+                series.appendData(DataPoint(data.id.toDouble(), data.value.toDouble()), true, 1000)
+            }
+            graph_view.addSeries(series)
+        })
     }
 
 

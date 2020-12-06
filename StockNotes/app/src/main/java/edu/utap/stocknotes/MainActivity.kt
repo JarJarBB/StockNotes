@@ -133,8 +133,8 @@ class MainActivity : AppCompatActivity() {
                     Log.d("HERE", "Username is ************** ${user.displayName}")
                     Log.d("HERE", "User email is ************ ${user.email}")
                 }
-                val allstocks=st.getAllStock()
-                PlaceholderData.values=allstocks
+//                val allstocks=st.getAllStock()
+//                PlaceholderData.values=allstocks
 
                 // just to get the adapter going, without waiting for the network
 
