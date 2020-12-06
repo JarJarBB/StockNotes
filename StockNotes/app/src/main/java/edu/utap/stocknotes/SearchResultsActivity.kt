@@ -82,6 +82,11 @@ class SearchResultsActivity : AppCompatActivity() {
             Log.d("observing", "api")
 
             recycleradap.addAll(it.stocksRes)
+            Log.d("sizestock",recycleradap.stocks.size.toString())
+
+//            recycleradap.notifyItemRangeChanged(0,recycleradap.stocks.size)
+            recycleradap.notifyDataSetChanged()
+
 
 
             }
@@ -96,8 +101,8 @@ class SearchResultsActivity : AppCompatActivity() {
                 makeCall(p0!!)
 
 
-                /*Log.d("updatedstocks",recycleradap.stocks[0].name)*/
-                recycleradap.notifyDataSetChanged()
+
+
 
                 return false
             }

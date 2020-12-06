@@ -1,5 +1,6 @@
 package edu.utap.stocknotes
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -71,6 +72,7 @@ class RecAdap(private val viewModel: MyViewModel)
 //        holder.bind(viewModel.getSto(holder.adapterPosition))
         val s = stocks[holder.adapterPosition]
         val c = viewModel.convertToSymbol(s)
+        Log.d("bind",c.symbol)
         holder.bind(c)
     }
 
