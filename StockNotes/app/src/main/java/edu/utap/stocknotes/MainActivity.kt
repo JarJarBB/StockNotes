@@ -96,6 +96,10 @@ class MainActivity : AppCompatActivity() {
 //        PlaceholderData.values=allstocks
         viewModel.favs.observe(this,{
             Log.d("got favs",viewModel.favs.value!!.size.toString())
+            // use this place to update the p;alceholder which will chnage our viepager
+            //if this is set then whenever the favs changes ,our main activity il change
+            //all you have to do is just add a sanpsjot listener(storgae liveddata),and then
+            //upddate viemodels fav
         })
 
 

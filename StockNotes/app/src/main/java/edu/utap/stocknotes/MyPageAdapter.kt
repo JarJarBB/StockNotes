@@ -37,6 +37,7 @@ class MyPageAdapter(private val theView: Int,
         val noteText = layout[3] as EditText
         val del_but = layout[4] as Button
         val desc = layout[5] as TextView
+        val save_but = layout[6] as Button
         stockName.text = symbolNotes[position].symbol
         noteText.setText(symbolNotes[position].note)
         desc.text = symbolNotes[position].name
@@ -49,7 +50,13 @@ class MyPageAdapter(private val theView: Int,
 
             st.deleteStock(symbolNotes[position])
         }
+        save_but.setOnClickListener {
+            var  s = symbolNotes[position]
+            s.note = noteText.text.toString()
+            st.addStock(s)
 
+
+        }
         val series = LineGraphSeries<DataPoint>()
         for (data in map[symbolNotes[position].symbol]!!) {
             series.appendData(DataPoint(data.id.toDouble(), data.value.toDouble()), true, 1000)

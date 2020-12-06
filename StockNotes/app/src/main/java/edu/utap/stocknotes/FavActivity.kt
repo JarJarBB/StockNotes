@@ -14,7 +14,7 @@ class FavActivity : AppCompatActivity() {
 
 
     private val viewModel: MyViewModel by viewModels()
-    private var st = StorageST(viewModel)
+    lateinit var st:StorageST
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +35,7 @@ class FavActivity : AppCompatActivity() {
 
         val stt = SymbolNote(symb!!,"",name!!,"true")
 
-
+        st = StorageST(viewModel)
         add_button.setOnClickListener{
 
             Log.d("finish","clicked")
