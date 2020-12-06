@@ -8,15 +8,22 @@ import com.android.volley.toolbox.StringRequest
 
 object Repository {
 
-    private const val templateUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&apikey=MS444HQW0HB7WHKU&symbol="
+    private var callCounter = 0
 
+    private const val templateUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&apikey=MS444HQW0HB7WHKU&symbol="
+    private const val templateUrl2 = "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&apikey=P6K5LAUKD7XZCQ9C&symbol="
     fun netInfo(symbol: String, viewModel: MyViewModel, queue: RequestQueue) {
-        val url = templateUrl + symbol
+        var url = ""
+        if (callCounter++ % 2 == 1) url = templateUrl + symbol
+        else url = templateUrl2 + symbol
         val stringRequest = StringRequest(
             Request.Method.GET, url,
             {
                 // on success
                 viewModel.postDataPoints(Pair(symbol, parseDataPoints(it)))
+                if (it.length > 100) Log.d("StringRequest", "Success: url: $url \n ${it.subSequence(0, 100)}")
+                else Log.d("StringRequest", "Success: url: $url \n ${it}")
+
             },
             {
                 // on error
