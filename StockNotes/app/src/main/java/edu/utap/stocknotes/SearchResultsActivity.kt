@@ -74,7 +74,7 @@ class SearchResultsActivity : AppCompatActivity() {
         itemDecor.setDrawable(ContextCompat.getDrawable(this@SearchResultsActivity, (R.drawable.divider))!!)
         search_RV.addItemDecoration(itemDecor)
         search_RV.adapter=recycleradap
-
+        search_bar.onActionViewExpanded()
 
 //        makeCall("apple")
         viewModel.observetSearchStock().observe(this,{
