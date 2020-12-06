@@ -1,14 +1,19 @@
 package edu.utap.stocknotes
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.app.ActivityCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 
 
-class RecAdap(private val viewModel: MyViewModel)
+class RecAdap(private val viewModel: MyViewModel, var mContext: Context)
     : RecyclerView.Adapter<RecAdap.VH>() {
 
      var stocks = mutableListOf<stocksResult>()
@@ -42,6 +47,8 @@ class RecAdap(private val viewModel: MyViewModel)
             shrtname.text = item.symbol
             lngname.text = item.desc
         }
+
+
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecAdap.VH{
@@ -51,6 +58,8 @@ class RecAdap(private val viewModel: MyViewModel)
 
         return VH(view)
     }
+
+
 
     fun add(item: stocksResult) {
         stocks.add(item)
@@ -72,9 +81,24 @@ class RecAdap(private val viewModel: MyViewModel)
 //        holder.bind(viewModel.getSto(holder.adapterPosition))
         val s = stocks[holder.adapterPosition]
         val c = viewModel.convertToSymbol(s)
-        Log.d("bind",c.symbol)
+        Log.d("bind", c.symbol)
         holder.bind(c)
+        holder.itemView.setOnClickListener{
+
+            val pageInt:Intent = Intent(mContext, FavActivity::class.java)
+            val myExtras = Bundle()
+            myExtras.putSerializable("name", c.desc)
+            myExtras.putSerializable("symbol", c.symbol)
+
+
+            pageInt.putExtras(myExtras)
+            val result = 1
+            startActivity(mContext, pageInt, myExtras)
+            (mContext as Activity).finish()
+
+        }
     }
+
 
     override fun getItemCount() = stocks.size
 

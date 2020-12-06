@@ -26,6 +26,11 @@
         <activity android:name=".SearchResultsActivity"  >
 
     </activity>
+
+        <activity android:name=".FavActivity"  >
+
+        </activity>
+
     </application>
 
 </manifest>

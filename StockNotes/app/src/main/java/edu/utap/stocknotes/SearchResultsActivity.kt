@@ -66,7 +66,7 @@ class SearchResultsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         // Set the layout for the layout we created
         setContentView(R.layout.search_rv)
-        recycleradap = RecAdap(viewModel)
+        recycleradap = RecAdap(viewModel,this)
 
         search_RV.layoutManager = LinearLayoutManager(this@SearchResultsActivity)
         // It is unfortunately complex to get dividers in a Recyclerview
