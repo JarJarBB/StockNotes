@@ -1,9 +1,11 @@
 package edu.utap.stocknotes
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.core.view.get
@@ -33,8 +35,22 @@ class MyPageAdapter(private val theView: Int,
         val stockName = layout[0] as TextView
         val graphView = layout[1] as GraphView
         val noteText = layout[3] as EditText
+        val del_but = layout[4] as Button
+        val desc = layout[5] as TextView
         stockName.text = symbolNotes[position].symbol
         noteText.setText(symbolNotes[position].note)
+        desc.text = symbolNotes[position].desc
+
+        if (symbolNotes[position].deleted == true){
+            del_but.text = "Add to favourites"
+            del_but.setBackgroundColor(Color.CYAN)
+        }
+        else{
+
+            del_but.text = "Delete Stock"
+            del_but.setBackgroundColor(Color.RED)
+
+        }
         val series = LineGraphSeries<DataPoint>()
         for (data in map[symbolNotes[position].symbol]!!) {
             series.appendData(DataPoint(data.id.toDouble(), data.value.toDouble()), true, 1000)
