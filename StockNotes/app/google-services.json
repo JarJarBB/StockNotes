@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "195434542464",
+    "project_id": "stocknote-46a58",
+    "storage_bucket": "stocknote-46a58.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:195434542464:android:fdc4163bdddfd25d903d65",
+        "android_client_info": {
+          "package_name": "edu.utap.stocknotes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "195434542464-1tnl4j30cuec9t78l9dd1mns6o42o80k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.utap.stocknotes",
+            "certificate_hash": "bd9573212ba4b9e68dfc97c22bb9a7b84d77b02e"
+          }
+        },
+        {
+          "client_id": "195434542464-fmgk4a18s2p6l579t2cp0cmarn3rq7ri.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRZ6pMG3Nm65_m5nudWdpXPA7o4IB6B3c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "195434542464-fmgk4a18s2p6l579t2cp0cmarn3rq7ri.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
