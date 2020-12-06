@@ -1,12 +1,12 @@
 package edu.utap.stocknotes
 
-<<<<<<< HEAD
+
 
 import android.app.SearchManager
 import android.content.Context
-=======
+
 import android.app.Activity
->>>>>>> main
+
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
