@@ -45,7 +45,7 @@ class RecAdap(private val viewModel: MyViewModel, var mContext: Context)
 //        }
         fun bind(item: SymbolNote) {
             shrtname.text = item.symbol
-            lngname.text = item.desc
+            lngname.text = item.name
         }
 
 
@@ -87,7 +87,7 @@ class RecAdap(private val viewModel: MyViewModel, var mContext: Context)
 
             val pageInt:Intent = Intent(mContext, FavActivity::class.java)
             val myExtras = Bundle()
-            myExtras.putSerializable("name", c.desc)
+            myExtras.putSerializable("name", c.name)
             myExtras.putSerializable("symbol", c.symbol)
 
 

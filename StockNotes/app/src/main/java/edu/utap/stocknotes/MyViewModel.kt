@@ -9,10 +9,11 @@ class MyViewModel : ViewModel(){
 
      val stockValues = MutableLiveData<Pair<String, List<Value>>>()
     val sres = MutableLiveData<StockSearchResp>()
+    val favs = MutableLiveData<List<SymbolNote>>()
 
 
     fun convertToSymbol(st:stocksResult):SymbolNote {
-        var symb = SymbolNote(st.symbol,"",st.name,false)
+        var symb = SymbolNote(st.symbol,"",st.name,"false")
         return symb
 
     }

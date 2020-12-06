@@ -2,27 +2,19 @@ package edu.utap.stocknotes
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.SearchView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.toolbox.Volley
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
 import kotlinx.android.synthetic.main.fav_graph.*
-import kotlinx.android.synthetic.main.search_rv.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class FavActivity : AppCompatActivity() {
 
 
     private val viewModel: MyViewModel by viewModels()
-    private var st = StorageST()
+    private var st = StorageST(viewModel)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +33,7 @@ class FavActivity : AppCompatActivity() {
         description.text = name
 
 
-        val stt = SymbolNote(symb!!,"",name!!,true)
+        val stt = SymbolNote(symb!!,"",name!!,"true")
 
 
         add_button.setOnClickListener{

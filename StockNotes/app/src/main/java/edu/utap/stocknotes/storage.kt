@@ -1,35 +1,27 @@
 package edu.utap.stocknotes
 
 import android.util.Log
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
-import java.io.File
 
-class StorageST {
+class StorageST(viewModel: MyViewModel?) {
 
         val currDoc = MainActivity.docref
         val curuser = MainActivity.currUser
+        val viewm = viewModel
+//        val favs = MutableLiveData<List<SymbolNote>>()
 
-        fun getAllStock():ArrayList<SymbolNote>{
-
-            val stocks = ArrayList<SymbolNote>()
+        fun getAllStock(){
 
             currDoc.collection("stocks")
                 .get()
-                .addOnSuccessListener { documents ->
-                    for (document in documents) {
-                        Log.d("FAKE", "${document.id} => ${document.data}")
-
-                        stocks.add(document.toObject(SymbolNote::class.java));
-
-                    }
+                .addOnSuccessListener { res ->
+                    viewm!!.favs.postValue(res.documents.mapNotNull {
+                        it.toObject(SymbolNote::class.java)
+                    })
                 }
                 .addOnFailureListener{exception->
-                    Log.w("Failure","Error getting documents.",exception)
+                    Log.d(javaClass.simpleName, "allNotes fetch FAILED ", exception)
                 }
-            return stocks
+
         }
 
 
@@ -39,9 +31,9 @@ class StorageST {
             // XXX Write me
             // https://firebase.google.com/docs/storage/android/delete-files
             var symbolMap = HashMap<String, String>()
-            symbolMap.put("symbol", stock.symbol)
-            symbolMap.put("name", stock.desc)
-            symbolMap.put("note", stock.note)
+            symbolMap.put("symbol", stock.symbol!!)
+            symbolMap.put("name", stock.name!!)
+            symbolMap.put("note", stock.note!!)
             symbolMap.put("deleted",true.toString())
 
             currDoc.collection("stocks").document(stock.symbol).set(symbolMap)
@@ -49,7 +41,7 @@ class StorageST {
 
         fun deleteStock(stock: SymbolNote){
 
-            currDoc.collection("stocks").document(stock.symbol).delete()
+            currDoc.collection("stocks").document(stock.symbol!!).delete()
         }
 
 

@@ -19,7 +19,7 @@ class MyPageAdapter(private val theView: Int,
                     private val symbolNotes: List<SymbolNote>,
                     private val map: Map<String, List<Value>>
                     ) : PagerAdapter() {
-    private val st=StorageST()
+    private val st=StorageST(null)
     override fun getCount(): Int {
         return map.size // Should return the number of GraphNotes
     }
@@ -39,7 +39,7 @@ class MyPageAdapter(private val theView: Int,
         val desc = layout[5] as TextView
         stockName.text = symbolNotes[position].symbol
         noteText.setText(symbolNotes[position].note)
-        desc.text = symbolNotes[position].desc
+        desc.text = symbolNotes[position].name
 
 
 
