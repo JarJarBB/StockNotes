@@ -10,7 +10,7 @@ object Repository {
 
     private var callCounter = 0
 
-    private const val templateUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&apikey=EMTACUXM8K7GV9WH&symbol="
+    private const val templateUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&apikey=MS444HQW0HB7WHKU&symbol="
     private const val templateUrl2 = "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&apikey=P6K5LAUKD7XZCQ9C&symbol="
     fun netInfo(symbol: String, viewModel: MyViewModel, queue: RequestQueue) {
         var url = ""
