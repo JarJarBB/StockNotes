@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.core.view.get
+import androidx.lifecycle.ViewModel
 import androidx.viewpager.widget.PagerAdapter
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.DataPoint
@@ -17,11 +18,11 @@ import com.jjoe64.graphview.series.LineGraphSeries
 class MyPageAdapter(private val theView: Int,
                     private val theContext: Context,
                     private val symbolNotes: List<SymbolNote>,
-                    private val map: Map<String, List<Value>>
-                    ) : PagerAdapter() {
-    private val st=StorageST(null)
+                    private val map: Map<String, List<Value>>,
+                    private val viewModel: MyViewModel) : PagerAdapter() {
+    private val st=StorageST(viewModel)
     override fun getCount(): Int {
-        return map.size // Should return the number of GraphNotes
+        return symbolNotes.size // Should return the number of GraphNotes
     }
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
@@ -44,8 +45,8 @@ class MyPageAdapter(private val theView: Int,
 
 
 
-        del_but.text = "Delete Stock"
-        del_but.setBackgroundColor(Color.RED)
+
+
         del_but.setOnClickListener{
 
             st.deleteStock(symbolNotes[position])

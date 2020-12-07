@@ -7,9 +7,10 @@ import androidx.lifecycle.ViewModel
 
 class MyViewModel : ViewModel(){
 
-     val stockValues = MutableLiveData<Pair<String, List<Value>>>()
+    val stockValues = MutableLiveData<Pair<String, List<Value>>>()
     val sres = MutableLiveData<StockSearchResp>()
     val favs = MutableLiveData<List<SymbolNote>>()
+    val marker = MutableLiveData<Boolean>()
 
 
     fun convertToSymbol(st:stocksResult):SymbolNote {

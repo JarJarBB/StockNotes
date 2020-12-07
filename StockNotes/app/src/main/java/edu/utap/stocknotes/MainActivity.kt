@@ -13,6 +13,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager
+import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
 
 //import kotlinx.android.synthetic.main.search_rv.*
@@ -23,10 +24,8 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 
 
-object PlaceholderData {
-    var values = listOf(SymbolNote("AAPL", "Good stock to own... Maybe!","Apple Inc","false"),
-            SymbolNote("SBUX", "Delicious stock to own... Fingers coffee!","Some random Stock","true"),
-            SymbolNote("NKE", "Not sure about buying. Maybe I should go for a run instead.","Nike","true"))
+object DataHolder {
+    var values = mutableListOf(SymbolNote("...", ""))
 }
 
 
@@ -40,6 +39,7 @@ class MainActivity : AppCompatActivity() {
     private val restap = restAPI()
     lateinit  var recycleradap :RecAdap
     private val favslist = MutableLiveData<ArrayList<SymbolNote>>()
+    private lateinit var viewPager: ViewPager
 
 
 
@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         lateinit var currUser :String
         lateinit var docref :DocumentReference
         var store = FirebaseFirestore.getInstance()
+        lateinit var queue2: RequestQueue
     }
     lateinit var st:StorageST
 
@@ -56,7 +57,7 @@ class MainActivity : AppCompatActivity() {
 
         val stocks= ArrayList<SymbolNote>()
 
-        val q = docref.collection("stocks") .orderBy("name")
+        docref.collection("stocks") .orderBy("name")
             .limit(100)
             .get()
             .addOnSuccessListener { documents ->
@@ -74,22 +75,27 @@ class MainActivity : AppCompatActivity() {
         return stocks
     }
 
+    private fun refreshUI() {
+        viewPager.adapter = MyPageAdapter(myView, this, DataHolder.values, map, viewModel)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
 
         fireAuth()
-        val viewPager: ViewPager = findViewById(R.id.viewPager)
+        viewPager = findViewById(R.id.viewPager)
 
 
-        for (value in PlaceholderData.values) {
-            map[value.symbol!!] = listOf()
-        }
+//        for (value in PlaceholderData.values) {
+//            map[value.symbol!!] = listOf()
+//        }
 
         viewModel.observeStockValues().observe(this, Observer {
             map[it.first] = it.second
-            viewPager.adapter = MyPageAdapter(myView, this, PlaceholderData.values, map)
+            refreshUI()
+          //  viewPager.adapter = MyPageAdapter(myView, this, DataHolder.values, map)
         })
 
 //        val allstocks=st.getAllStock()
@@ -100,6 +106,21 @@ class MainActivity : AppCompatActivity() {
             //if this is set then whenever the favs changes ,our main activity il change
             //all you have to do is just add a sanpsjot listener(storgae liveddata),and then
             //upddate viemodels fav
+
+            // fetch the graph data from network
+            val queue = Volley.newRequestQueue(this)
+            for (i in it) {
+                Repository.netInfo(i.symbol!!, viewModel, queue)
+            }
+            DataHolder.values = it as MutableList<SymbolNote>
+            for (value in DataHolder.values) {
+                map[value.symbol!!] = listOf()
+            }
+        })
+
+        viewModel.marker.observe(this,{
+            Log.d("HERE", "calling refreshUI()")
+            refreshUI()
         })
 
 
@@ -149,22 +170,20 @@ class MainActivity : AppCompatActivity() {
 
 
                 // just to get the adapter going, without waiting for the network
-
+                listOf(SymbolNote("...", ""))
 
 //                Log.d("AllStocks",allstocks.size.toString())
-                val sym = PlaceholderData.values[0].symbol
-                viewModel.postDataPoints(Pair(sym, map[sym]) as Pair<String, List<Value>>)
+//                val sym = PlaceholderData.values[0].symbol
+               viewModel.postDataPoints(Pair(DataHolder.values[0].symbol!!, listOf()))
 
-                // fetch the graph data from network
-                val queue = Volley.newRequestQueue(this)
-                for (i in PlaceholderData.values) {
-                    Repository.netInfo(i.symbol!!, viewModel, queue)
-                }
+                queue2 = Volley.newRequestQueue(this)
 
             } else {
                 // Sign in failed.
                 Log.d("HERE", "Sign-in failed")
             }
+        } else {
+            Log.d("HERE", "Sign-in failed v2")
         }
     }
 

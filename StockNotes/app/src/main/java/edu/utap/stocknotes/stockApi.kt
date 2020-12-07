@@ -8,7 +8,7 @@ import retrofit2.http.Query
 
 interface  StockApi {
 
-    @GET("query?apikey=MS444HQW0HB7WHKU&symbol=\"&function=SYMBOL_SEARCH")
+    @GET("query?apikey=8Z8N3IM7BYLWD3XZ&symbol=\"&function=SYMBOL_SEARCH")
     fun fetchStocks(
             @Query("keywords") keywords: String,
     ) : Call<StockSearchResp>

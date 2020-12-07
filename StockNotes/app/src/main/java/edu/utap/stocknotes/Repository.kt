@@ -10,12 +10,9 @@ object Repository {
 
     private var callCounter = 0
 
-    private const val templateUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&apikey=MS444HQW0HB7WHKU&symbol="
-    private const val templateUrl2 = "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&apikey=P6K5LAUKD7XZCQ9C&symbol="
+    private const val templateUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&apikey=8Z8N3IM7BYLWD3XZ&symbol="
     fun netInfo(symbol: String, viewModel: MyViewModel, queue: RequestQueue) {
-        var url = ""
-        if (callCounter++ % 2 == 1) url = templateUrl + symbol
-        else url = templateUrl2 + symbol
+        val url = templateUrl + symbol
         val stringRequest = StringRequest(
             Request.Method.GET, url,
             {
